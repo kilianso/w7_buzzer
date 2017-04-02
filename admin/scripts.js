@@ -56,8 +56,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				xhr.open('POST', 'makejson.php');
 				xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 				xhr.onload = function() {
+					var msg;
 					if (xhr.status === 200) {
-						console.log('all good, json file updated!');
+						msg = 'Daten gespeichert!';
+						document.getElementById('confirm').innerHTML = msg;
+					}else{
+						msg = 'Etwas ist schiefgelaufen.!';
+						document.getElementById('confirm').innerHTML = msg;
 					}
 				};
 				xhr.send(JSON.stringify(data));

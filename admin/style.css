@@ -105,3 +105,8 @@ button {
 .clearfix{
 	clear: both;
 }
+span#confirm {
+    display: block;
+    text-align: center;
+    margin: 1rem 0;
+}
