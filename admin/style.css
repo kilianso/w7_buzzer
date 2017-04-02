@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+body, a, p, button, input {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+		color: #444;
+}
+
+body {
+	background-color: #234678;
+	position: relative;
+	background-size: cover;
+	background-image: url('img/lines.png');
+	background-position: top, 50%;
+	background-repeat: no-repeat;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+header{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0 0 1rem 0;
+}
+@media screen and (max-width: 480px) {
+	header{
+		flex-direction: column;
+	}
+	.date{
+		text-align: center;
+	}
+}
+
+hr{
+	border: 1px solid #efefef;
+}
+
+#date{
+	display: block;
+	width: 100%;
+}
+
+.form-wrapper {
+    max-width: 480px;
+    background: white;
+    padding: 2rem 4rem;
+    margin: 10vh auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: .5rem;
+    margin: .2rem 0 1rem 0;
+		border: 1px solid #ddd;
+}
+
+#codes{
+	margin-bottom: 1rem;
+}
+.buttons {
+    display: flex;
+    margin: -.5rem;
+}
+
+.button, button {
+    display: block;
+    width: 100%;
+}
+
+button {
+    padding: 1rem;
+    border: none;
+    background: none;
+    color: white;
+		cursor: pointer;
+}
+
+.button {
+    margin: .5rem;
+    text-decoration: none;
+}
+
+.save {
+    background: #4CAF50;
+}
+.save:hover{
+	background: #3C893F;
+}
+
+.print {
+    background: #234678;
+}
+.print:hover{
+	background: #162B4A;
+}
+.clearfix{
+	clear: both;
+}
