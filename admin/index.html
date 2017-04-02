@@ -1,0 +1,37 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Welle 7 Buzzer - Admintool</title>
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<section class="form-wrapper">
+		<header>
+			<span id="date">Datum</span>
+			<img class="logo" src="img/logo_w7.svg" alt="">
+		</header>
+		<hr class="clearfix">
+		<h2>Buzzer - Admintool</h2>
+		<form>
+			<label for="beschreibung">Beschreibung:</label>
+			<input id="beschreibung" type="text" required>
+			<label for="anzahl">Anzahl:</label>
+			<input id="anzahl" type="number" required>
+			<span>Gewinncodes:</span>
+			<div id="codes">
+				<!--Gewinncodes will be append here.-->
+			</div>
+			<div class="buttons">
+				<a class="button" href="#"><button class="save" type="submit">Speichern</button></a>
+				<a class="button" href="javascript:window.print()"><button class="print" type="button">Drucken</button></a>
+			</div>
+		</form>
+	</section>
+	<script src="scripts.js"></script>
+</body>
+
+</html>
