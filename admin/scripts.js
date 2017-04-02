@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Number of inputs to create
         var anzahl = this.value;
         // Container <div> where dynamic content will be placed
-        var codes = document.getElementById("codes");
+        var codes = document.getElementById("codes-wrapper");
         // Clear previous contents of the container
 				codes.innerHTML = "";
         for (i = 0; i < anzahl; i++) {
@@ -34,19 +34,34 @@ document.addEventListener("DOMContentLoaded", function() {
 						input.placeholder = "code #" +(i+1);
             codes.appendChild(input);
         }
+				// document.getElementsByClassName('codes')[0].focus();
     });
     // save the data
 		document.getElementsByClassName('save')[0].addEventListener('click', function(e){
-			e.preventDefault();
 			var allcodes = document.getElementsByClassName('codes');
 			var data = {};
 			var values = [];
 			data.beschreibung = document.getElementById('beschreibung').value;
 			data.anzahl = document.getElementById('anzahl').value;
 			for (var i = 0; i < allcodes.length; i++) {
-				values.push(allcodes[i].value);
+				if(allcodes[i].value){
+					values.push(allcodes[i].value);
+				}
 			}
 			data.codes = values;
-			// $.post("json.php", {json : JSON.stringify(data)});
+			if(data.codes.length == allcodes.length){
+				//send json only when all codes are entered
+				e.preventDefault();
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', 'makejson.php');
+				xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+				xhr.onload = function() {
+					if (xhr.status === 200) {
+						console.log('all good, json file updated!');
+					}
+				};
+				xhr.send(JSON.stringify(data));
+			}
+
 		});
 });
