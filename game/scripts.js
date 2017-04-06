@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	};
 	xhr.send();
 
-	//set hoursCounter initially
+	//set and/or update hoursCounter initially, compared to the last known value in the localStorage
 	updateHours(timeThen, timeNow);
 
 	//update hoursCounter once per hour;
