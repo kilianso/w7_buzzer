@@ -1,7 +1,8 @@
 var newData;
 var lsData;
 
-var timeNow;
+var timeThen = localStorage.getItem('time');
+var timeNow = new Date().getHours();
 
 document.addEventListener("DOMContentLoaded", function() {
 	var xhr = new XMLHttpRequest();
@@ -23,4 +24,23 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	};
 	xhr.send();
+
+	//set hoursCounter initially
+	updateHours(timeThen, timeNow);
+
+	//update hoursCounter once per hour;
+	setInterval(function(){
+		updateHours(timeThen, timeNow);
+	},3600000);
 });
+
+function updateHours(then, now){
+	timeNow = new Date().getHours();
+	if(then != now){
+		localStorage.setItem('time', new Date().getHours());
+		timeThen = localStorage.getItem('time');
+		var updateHoursCounter = localStorage.getItem('hoursCounter');
+		updateHoursCounter-- ;
+		localStorage.setItem('hoursCounter', updateHoursCounter);
+	}
+}
