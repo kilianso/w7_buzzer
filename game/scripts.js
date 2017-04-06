@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				//set winningFactor initially
 				calculateWinningFactor(hoursCounter, remainingCodes);
 				//update hoursCounter and winningFactor once per hour;
+				console.log(matchNumber);
 				setInterval(function(){
 					updateHours(timeThen, timeNow);
 					calculateWinningFactor(hoursCounter, remainingCodes);
@@ -68,8 +69,7 @@ function updateHours(then, now){
 }
 
 function checkForWin(winningFactor){
-	// always round UP if the winningFactor is lower than one! Otherwise if the prices or hours changes, the number might keep the same for a long time if the system decides to round up or down.
-	var randomNumberBetweenOneandWinningFactor = Math.round(Math.random() * winningFactor);
+	var randomNumberBetweenZeroandWinningFactor = Math.round(Math.random() * winningFactor);
 	var codes = lsData.codes;
 	if (randomNumberBetweenOneandWinningFactor == matchNumber && codes.length > 0) {
 		//1. display the winner screen, pick the first code in the lsData.codes Array and show it there.
@@ -84,6 +84,7 @@ function checkForWin(winningFactor){
 		localStorage.setItem('data', JSON.stringify(lsData));
 		//update winningFactor
 		calculateWinningFactor(hoursCounter, remainingCodes);
+
 	}else{
 		//show looser screen
 		console.log('nope, nothing.');
@@ -94,11 +95,12 @@ function calculateWinningFactor(hoursLeft, codesLeft){
 	//(Verbleibende Stunden x Faktor 10 / verbleibende Anzahl Codes) immer auf ganze Zahlen AUFrunden = Winningfaktor in dieser Stunde.
 	winningFactor = Math.ceil((hoursLeft * 10) / codesLeft);
 	console.log("Hours left:", hoursLeft, "Prices left:", codesLeft, "winning-factor:", winningFactor);
-
+	//set and update matchNumber
+	matchNumber = generateMatchNumber(winningFactor);
 }
 
-function generateMatchNumber(){
-	var randomNumberBetweenOneandWinningFactor = Math.floor(Math.random());
+function generateMatchNumber(winningFactor){
+	return Math.round(Math.random() * winningFactor);
 }
 
 function playTheGame(){
