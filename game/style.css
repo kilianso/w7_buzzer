@@ -5,22 +5,101 @@
 body, a, p, button, input {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: Helvetica, sans-serif;
     font-size: 16px;
-		color: #444;
+    color: #444;
 }
 
 body {
-	background-color: #234678;
-	position: relative;
-	background-size: contain;
-	background-image: url('img/lines.png');
-	background-position: bottom, 50%;
-	background-repeat: no-repeat;
-	width: 100%;
-	overflow-x: hidden;
+    background-color: #234678;
+    position: relative;
+    background-size: contain;
+    background-image: url('img/lines.png');
+    background-position: bottom, 50%;
+    background-repeat: no-repeat;
+    width: 100%;
+    overflow-x: hidden;
 }
 
-.clearfix{
-	clear: both;
+header {
+    padding: 4vw;
+}
+
+.logo {
+    float: right;
+}
+
+.game{
+	padding: 5vh;
+}
+
+.yellow-text p, .white-text p, .goback{
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	display: none;
+}
+
+.yellow-text p.active, .white-text p.active{
+	display: block;
+}
+
+.goback.active{
+	color: #234678;
+	display: table;
+	margin: 2rem auto;
+	background: white;
+	padding: 1rem;
+}
+
+.yellow-text p{
+    font-size: 1.6rem;
+    color: #FAF541;
+    text-transform: uppercase;
+}
+
+.white-text p{
+	font-size: 2rem;
+	color: white;
+	margin: 5vh 0;
+	line-height: 1.3;
+}
+
+.press-here{
+	font-size: 4rem;
+	text-align: center;
+	color: #234678;
+	background: #FAF541;
+	border-radius: 50%;
+	height: 40vh;
+	width: 40vh;
+	margin: 0 auto;
+	-webkit-box-shadow: 0px 2px 33px -6px rgba(0,0,0,0.7);
+	-moz-box-shadow: 0px 2px 33px -6px rgba(0,0,0,0.7);
+	box-shadow: 0px 2px 33px -6px rgba(0,0,0,0.7);
+	display: flex;
+	align-items: center;
+}
+.press-here span{
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 0 2rem;
+}
+
+footer{
+	color: white;
+	text-transform: uppercase;
+	padding: 5vh;
+	position: absolute;
+	bottom: 0;
+}
+
+footer small{
+	display: block;
+	margin: .5rem 0;
+}
+
+.clearfix {
+    clear: both;
 }

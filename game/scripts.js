@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					updateHours(timeThen, timeNow);
 					calculateWinningFactor(hoursCounter, remainingCodes);
 				},3600000);
-				testing();
+				// testing();
 			},200);
 		}else{
 			alert("can't load data", xhr.status);
