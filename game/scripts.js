@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					updateHours(timeThen, timeNow);
 					calculateWinningFactor(hoursCounter, remainingCodes);
 				},3600000);
+				testing();
 			},200);
 		}else{
 			alert("can't load data", xhr.status);
@@ -108,4 +109,13 @@ function calculateWinningFactor(hoursLeft, codesLeft){
 
 function generateMatchNumber(winningFactor){
 	return Math.round(Math.random() * winningFactor);
+}
+
+function testing(){
+	document.getElementById('testing').innerHTML =
+		"date: " + lsData.date + "<br>" +
+		"hours left: " + hoursCounter + "<br>" +
+		"prices left: " + remainingCodes + "<br>" +
+		"winning-factor: " + winningFactor + "<br>" +
+		"winning-number: " + matchNumber;
 }
