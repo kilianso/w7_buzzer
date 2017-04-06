@@ -162,6 +162,7 @@ function checkForWin(winningFactor){
 }
 
 function goingBack(){
+	pressHere.children[0].innerHTML = 'Hier drücken';
 	pressHere.classList.add("active");
 	yellowText1.classList.add("active");
 	whiteText1.classList.add("active");
