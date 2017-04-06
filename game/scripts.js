@@ -4,6 +4,9 @@ var lsData;
 var timeThen = localStorage.getItem('time');
 var timeNow = new Date().getHours();
 
+var remainingCodes;
+var theWinnerNumber;
+
 document.addEventListener("DOMContentLoaded", function() {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', '../admin/data.json');
@@ -21,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					localStorage.setItem('data', xhr.responseText);
 					localStorage.setItem('hoursCounter', 10);
 				}
+				// if there is already data in the storage and it's the same day, do nothing!
 			}else{
 				//save localStorage if it's empty
 				localStorage.setItem('data', xhr.responseText);
@@ -30,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			setTimeout(function(){
 				//set and/or update hoursCounter initially, compared to the last known value in the localStorage
 				updateHours(timeThen, timeNow);
-				updatePrices();
 				//update hoursCounter once per hour;
 				setInterval(function(){
 					updateHours(timeThen, timeNow);
@@ -39,9 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		}else{
 			alert("can't load data", xhr.status);
 		}
-	};
-	xhr.done = function(){
-		console.log('done');
 	};
 	xhr.send();
 });
@@ -59,8 +59,23 @@ function updateHours(then, now){
 	}
 }
 
-function updatePrices(matchingCode){
-	console.log(lsData);
+function checkForWin(matchingNumber){
+	codes = lsData.codes;
+	if (matchingNumber  && codes.length > 0) {
+		//1. display the winner screen, pick the first code in the lsData.codes Array and show it there.
+		console.log('you win!');
+		//2. delete the last code from the Array.
+		codes.pop();
+		//3.update lsData variable
+		lsData.codes = codes;
+		//4. update remainingCodes;
+		remainingCodes = lsData.codes.length;
+		//5.update localStorage
+		localStorage.setItem('data', JSON.stringify(lsData));
+	}else{
+		//show looser screen
+		console.log('nope, nothing.');
+	}
 }
 
 function calculateWinningFactor(remainingHours, remainingCodes){
