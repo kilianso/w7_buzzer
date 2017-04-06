@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", function() {
             // Create an <input> element, set its type and name attributes
             var input = document.createElement("input");
 						input.className = "codes";
-            input.type = "tel";
+            input.type = "number";
             input.name = "code" + i;
-						input.maxLength = "4";
+						input.disabled = true;
 						input.required = true;
-						input.placeholder = "code #" +(i+1);
+						input.value = randomInt(1000, 9999)
             codes.appendChild(input);
         }
 				// document.getElementsByClassName('codes')[0].focus();
@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
 				}
 			}
 			data.codes = values;
-			if(data.codes.length == allcodes.length){
+			data.date = today;
+			if(data.codes && data.anzahl && data.beschreibung){
 				//send json only when all codes are entered
 				e.preventDefault();
 				var xhr = new XMLHttpRequest();
@@ -70,3 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		});
 });
+
+function randomInt(min,max){
+  return Math.floor(Math.random()*(max-min+1)+min);
+}
