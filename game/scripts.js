@@ -5,7 +5,8 @@ var timeThen = localStorage.getItem('time');
 var timeNow = new Date().getHours();
 
 var remainingCodes;
-var theWinnerNumber;
+var matchNumber;
+var todaysWinningFactor;
 
 document.addEventListener("DOMContentLoaded", function() {
 	var xhr = new XMLHttpRequest();
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			//Not happy with that, will use a promise instead soon. You'll have to wait until the localStorage is set before you can do anything.
 			setTimeout(function(){
+				checkForWin(10.4)
 				//set and/or update hoursCounter initially, compared to the last known value in the localStorage
 				updateHours(timeThen, timeNow);
 				//update hoursCounter once per hour;
@@ -52,6 +54,7 @@ function updateHours(then, now){
 		localStorage.setItem('time', new Date().getHours());
 		timeThen = localStorage.getItem('time');
 		var updateHoursCounter = localStorage.getItem('hoursCounter');
+		//avoid that hoursCounter is smaller than 1.
 		if(updateHoursCounter > 0){
 			updateHoursCounter-- ;
 			localStorage.setItem('hoursCounter', updateHoursCounter);
@@ -59,9 +62,12 @@ function updateHours(then, now){
 	}
 }
 
-function checkForWin(matchingNumber){
-	codes = lsData.codes;
-	if (matchingNumber  && codes.length > 0) {
+function checkForWin(winningFactor){
+	// always round UP if the winningFactor is lower than one! Otherwise if the prices or hours changes, the number might keep the same for a long time if the system decides to round up or down.
+	var randomNumberBetweenOneandWinningFactor = Math.round(Math.random() * Math.ceil(winningFactor));
+	console.log(winningFactor, randomNumberBetweenOneandWinningFactor);
+	var codes = lsData.codes;
+	if (randomNumberBetweenOneandWinningFactor == matchNumber && codes.length > 0) {
 		//1. display the winner screen, pick the first code in the lsData.codes Array and show it there.
 		console.log('you win!');
 		//2. delete the last code from the Array.
@@ -79,7 +85,11 @@ function checkForWin(matchingNumber){
 }
 
 function calculateWinningFactor(remainingHours, remainingCodes){
+	todaysWinningFactor = 0;
+}
 
+function generateMatchNumber(){
+	var randomNumberBetweenOneandWinningFactor = Math.floor(Math.random());
 }
 
 function playTheGame(){
