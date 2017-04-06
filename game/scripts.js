@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				//set winningFactor initially
 				calculateWinningFactor(hoursCounter, remainingCodes);
 				//update hoursCounter and winningFactor once per hour;
-				console.log(matchNumber);
+				console.log("Winningnumber:", matchNumber);
 				setInterval(function(){
 					updateHours(timeThen, timeNow);
 					calculateWinningFactor(hoursCounter, remainingCodes);
@@ -52,6 +52,11 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	};
 	xhr.send();
+	//play the game
+	document.getElementById('btn').addEventListener('click',function(){
+		//add events to play the game.
+		checkForWin(winningFactor);
+	});
 });
 
 function updateHours(then, now){
@@ -71,13 +76,16 @@ function updateHours(then, now){
 function checkForWin(winningFactor){
 	var randomNumberBetweenZeroandWinningFactor = Math.round(Math.random() * winningFactor);
 	var codes = lsData.codes;
-	if (randomNumberBetweenOneandWinningFactor == matchNumber && codes.length > 0) {
+	console.log(randomNumberBetweenZeroandWinningFactor);
+	if (randomNumberBetweenZeroandWinningFactor == matchNumber && codes.length > 0) {
 		//1. display the winner screen, pick the first code in the lsData.codes Array and show it there.
 		console.log('you win!');
 		//2. delete the last code from the Array.
 		codes.pop();
 		//3.update lsData variable
 		lsData.codes = codes;
+		lsData.anzahl = codes.length;
+		console.log(lsData.anzahl);
 		//4. update remainingCodes;
 		remainingCodes = lsData.codes.length;
 		//5.update localStorage
@@ -87,7 +95,7 @@ function checkForWin(winningFactor){
 
 	}else{
 		//show looser screen
-		console.log('nope, nothing.');
+		console.log('nope, no price for you.');
 	}
 }
 
@@ -101,8 +109,4 @@ function calculateWinningFactor(hoursLeft, codesLeft){
 
 function generateMatchNumber(winningFactor){
 	return Math.round(Math.random() * winningFactor);
-}
-
-function playTheGame(){
-	checkForWin(winningFactor);
 }
