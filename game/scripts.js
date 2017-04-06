@@ -11,18 +11,18 @@ var winningFactor;
 
 //all the DOM Elements
 var pressHere = document.getElementsByClassName('press-here')[0];
+var goBack = document.getElementsByClassName('goback')[0];
+var goBackCounter = document.getElementsByClassName('goback-counter')[0];
 
 var yellowText1 = document.getElementsByClassName('yellow-text--1')[0]; //initial
-var initialYellowText = yellowText1.value;
 var yellowText2 = document.getElementsByClassName('yellow-text--2')[0]; //looser
 var yellowText3 = document.getElementsByClassName('yellow-text--3')[0]; //winner
 
 var whiteText1 = document.getElementsByClassName('white-text--1')[0]; //initial
-var initialWhiteText = whiteText1.value;
 var whiteText2 = document.getElementsByClassName('white-text--2')[0]; //looser
 var whiteText3 = document.getElementsByClassName('white-text--3')[0]; //winner
 
-var loser = document.getElementsByClassName('white-text--3')[0];
+var winnerDigit = document.getElementsByClassName('winner-digit')[0]; //where to display the code?
 
 document.addEventListener("DOMContentLoaded", function() {
 	var xhr = new XMLHttpRequest();
@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				//save localStorage if it's empty
 				localStorage.setItem('data', xhr.responseText);
 				localStorage.setItem('hoursCounter', 11);
+				lsData = JSON.parse(localStorage.getItem('data'));
 			}
 			//Not happy with that, will use a promise instead soon. You'll have to wait until the localStorage is set before you can do anything.
 			setTimeout(function(){
@@ -93,30 +94,86 @@ function updateHours(then, now){
 }
 
 function checkForWin(winningFactor){
+	var seconds = 20;
 	var randomNumberBetweenZeroandWinningFactor = Math.round(Math.random() * winningFactor);
 	var codes = lsData.codes;
+	var interval;
 	console.log("your number:" , randomNumberBetweenZeroandWinningFactor);
 	if (randomNumberBetweenZeroandWinningFactor == matchNumber && codes.length > 0) {
-		//1. display the winner screen, pick the first code in the lsData.codes Array and show it there.
-		console.log('you win!');
-		//2. delete the last code from the Array.
-		codes.pop();
-		//3.update lsData variable
+		//delete the last code from the Array.
+		var lastItem = codes.pop();
+		console.log(codes);
+		//display winningCode
+		winnerDigit.children[0].innerHTML = lastItem;
+		//update lsData variable
 		lsData.codes = codes;
 		lsData.anzahl = codes.length;
-		//4. update remainingCodes;
+		//update remainingCodes;
 		remainingCodes = lsData.codes.length;
-		//5.update localStorage
+		//update localStorage
 		localStorage.setItem('data', JSON.stringify(lsData));
 		//update winningFactor
 		calculateWinningFactor(hoursCounter, remainingCodes);
+		//display the winner screen, pick the first code in the lsData.codes Array and show it there.
+		console.log('you win!');
+		pressHere.classList.remove("wiggle", "active");
+		yellowText1.classList.remove("active");
+		whiteText1.classList.remove("active");
 
+		yellowText3.classList.add("active");
+		whiteText3.classList.add("active");
+
+		winnerDigit.classList.add('active');
+		goBack.classList.add("active");
+
+		interval = setInterval(function() {
+		   if (seconds > 0) {
+				 	goBackCounter.innerHTML = seconds;
+		      seconds--;
+		   }
+		   else {
+		      clearInterval(interval);
+					goingBack();
+		   }
+		}, 1000);
 	}else{
 		//show looser screen
 		console.log('nope, no price for you.');
-		pressHere
+
+		pressHere.classList.remove("wiggle", "active");
+
+		yellowText1.classList.remove("active");
+		whiteText1.classList.remove("active");
+
+		yellowText2.classList.add("active");
+		whiteText2.classList.add("active");
+		goBack.classList.add("active");
+		interval = setInterval(function() {
+			 if (seconds > 0) {
+					goBackCounter.innerHTML = seconds;
+					seconds--;
+			 }
+			 else {
+					clearInterval(interval);
+					goingBack();
+			 }
+		}, 1000);
 	}
 }
+
+function goingBack(){
+	pressHere.classList.add("active");
+	yellowText1.classList.add("active");
+	whiteText1.classList.add("active");
+
+	yellowText2.classList.remove("active");
+	whiteText2.classList.remove("active");
+	yellowText3.classList.remove("active");
+	whiteText3.classList.remove("active");
+	goBack.classList.remove("active");
+	winnerDigit.classList.remove('active');
+}
+
 
 function calculateWinningFactor(hoursLeft, codesLeft){
 	//(Verbleibende Stunden x Faktor 10 / verbleibende Anzahl Codes) immer auf ganze Zahlen AUFrunden = Winningfaktor in dieser Stunde.
