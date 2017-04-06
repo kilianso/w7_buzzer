@@ -9,6 +9,21 @@ var remainingCodes;
 var matchNumber;
 var winningFactor;
 
+//all the DOM Elements
+var pressHere = document.getElementsByClassName('press-here')[0];
+
+var yellowText1 = document.getElementsByClassName('yellow-text--1')[0]; //initial
+var initialYellowText = yellowText1.value;
+var yellowText2 = document.getElementsByClassName('yellow-text--2')[0]; //looser
+var yellowText3 = document.getElementsByClassName('yellow-text--3')[0]; //winner
+
+var whiteText1 = document.getElementsByClassName('white-text--1')[0]; //initial
+var initialWhiteText = whiteText1.value;
+var whiteText2 = document.getElementsByClassName('white-text--2')[0]; //looser
+var whiteText3 = document.getElementsByClassName('white-text--3')[0]; //winner
+
+var loser = document.getElementsByClassName('white-text--3')[0];
+
 document.addEventListener("DOMContentLoaded", function() {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', '../admin/data.json');
@@ -34,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			//Not happy with that, will use a promise instead soon. You'll have to wait until the localStorage is set before you can do anything.
 			setTimeout(function(){
+				whiteText1.innerHTML = lsData.beschreibung;
 				hoursCounter = localStorage.getItem("hoursCounter");
 				remainingCodes = lsData.codes.length;
 				//set and/or update hoursCounter initially, compared to the last known value in the localStorage
@@ -53,9 +69,12 @@ document.addEventListener("DOMContentLoaded", function() {
 	};
 	xhr.send();
 	//play the game
-	document.getElementById('btn').addEventListener('click',function(){
-		//add events to play the game.
-		checkForWin(winningFactor);
+	pressHere.addEventListener('click',function(e){
+		pressHere.children[0].innerHTML = 'Bereit?';
+		pressHere.className += " wiggle";
+		setTimeout(function(){
+			checkForWin(winningFactor);
+		},2000)
 	});
 });
 
@@ -85,7 +104,6 @@ function checkForWin(winningFactor){
 		//3.update lsData variable
 		lsData.codes = codes;
 		lsData.anzahl = codes.length;
-		console.log(lsData.anzahl);
 		//4. update remainingCodes;
 		remainingCodes = lsData.codes.length;
 		//5.update localStorage
@@ -96,6 +114,7 @@ function checkForWin(winningFactor){
 	}else{
 		//show looser screen
 		console.log('nope, no price for you.');
+		pressHere
 	}
 }
 
