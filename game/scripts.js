@@ -12,26 +12,38 @@ document.addEventListener("DOMContentLoaded", function() {
 		if (xhr.status === 200) {
 			newData = JSON.parse(xhr.responseText);
 			lsData = JSON.parse(localStorage.getItem('data'));
-			if(newData.date != lsData.date){
-				console.log('update localStorage');
-				// update the localStorage if the date changed in the json file
-				localStorage.clear();
+			//check if theres already data in the localStorage
+			if (localStorage.getItem("data") !== null) {
+				if(newData.date != lsData.date){
+					console.log('update localStorage');
+					// update the localStorage if the date changed in the json file
+					localStorage.clear();
+					localStorage.setItem('data', xhr.responseText);
+					localStorage.setItem('hoursCounter', 10);
+				}
+			}else{
+				//save localStorage if it's empty
 				localStorage.setItem('data', xhr.responseText);
 				localStorage.setItem('hoursCounter', 10);
 			}
+			//Not happy with that, will use a promise instead soon. You'll have to wait until the localStorage is set before you can do anything.
+			setTimeout(function(){
+				//set and/or update hoursCounter initially, compared to the last known value in the localStorage
+				updateHours(timeThen, timeNow);
+				updatePrices();
+				//update hoursCounter once per hour;
+				setInterval(function(){
+					updateHours(timeThen, timeNow);
+				},3600000);
+			},200);
 		}else{
-			console.log("can't load data", xhr.status);
+			alert("can't load data", xhr.status);
 		}
 	};
+	xhr.done = function(){
+		console.log('done');
+	};
 	xhr.send();
-
-	//set and/or update hoursCounter initially, compared to the last known value in the localStorage
-	updateHours(timeThen, timeNow);
-
-	//update hoursCounter once per hour;
-	setInterval(function(){
-		updateHours(timeThen, timeNow);
-	},3600000);
 });
 
 function updateHours(then, now){
@@ -40,7 +52,21 @@ function updateHours(then, now){
 		localStorage.setItem('time', new Date().getHours());
 		timeThen = localStorage.getItem('time');
 		var updateHoursCounter = localStorage.getItem('hoursCounter');
-		updateHoursCounter-- ;
-		localStorage.setItem('hoursCounter', updateHoursCounter);
+		if(updateHoursCounter > 0){
+			updateHoursCounter-- ;
+			localStorage.setItem('hoursCounter', updateHoursCounter);
+		}
 	}
+}
+
+function updatePrices(matchingCode){
+	console.log(lsData);
+}
+
+function calculateWinningFactor(remainingHours, remainingCodes){
+
+}
+
+function playTheGame(){
+
 }
