@@ -102,7 +102,6 @@ function checkForWin(winningFactor){
 	if (randomNumberBetweenZeroandWinningFactor == matchNumber && codes.length > 0) {
 		//delete the last code from the Array.
 		var lastItem = codes.pop();
-		console.log(codes);
 		//display winningCode
 		winnerDigit.children[0].innerHTML = lastItem;
 		//update lsData variable
