@@ -15,27 +15,34 @@ document.addEventListener("DOMContentLoaded", function() {
     today = dd + '.' + mm + '.' + yyyy;
     document.getElementById('date').innerHTML = today;
 
-    // add coupon fields based on "anzahl"
-    document.getElementById('anzahl').addEventListener("focusout", function() {
-        // Number of inputs to create
-        var anzahl = this.value;
-        // Container <div> where dynamic content will be placed
-        var codes = document.getElementById("codes-wrapper");
-        // Clear previous contents of the container
-				codes.innerHTML = "";
-        for (i = 0; i < anzahl; i++) {
-            // Create an <input> element, set its type and name attributes
-            var input = document.createElement("input");
-						input.className = "codes";
-            input.type = "number";
-            input.name = "code" + i;
-						input.disabled = true;
-						input.required = true;
-						input.value = randomInt(1000, 9999)
-            codes.appendChild(input);
-        }
-				// document.getElementsByClassName('codes')[0].focus();
-    });
+		document.getElementsByClassName('generate')[0].addEventListener('click', function(e){
+			var beschreibung = document.getElementById('beschreibung').value;
+			// Number of inputs to create
+			var anzahl = document.getElementById('anzahl').value;
+			// Container <div> where dynamic content will be placed
+			var codes = document.getElementById("codes-wrapper");
+			// Clear previous contents of the container
+			codes.innerHTML = "";
+			for (i = 0; i < anzahl; i++) {
+					// Create an <input> element, set its type and name attributes
+					var input = document.createElement("input");
+					input.className = "codes";
+					input.type = "number";
+					input.name = "code" + i;
+					input.disabled = true;
+					input.required = true;
+					input.value = randomInt(1000, 9999);
+					codes.appendChild(input);
+			}
+			if(beschreibung && anzahl){
+				e.preventDefault();
+				console.log(this);
+				this.parentNode.classList.remove("active");
+				document.getElementsByClassName('second')[0].classList.add("active");
+				document.getElementsByClassName('second')[1].classList.add("active");
+			}
+		});
+
     // save the data
 		document.getElementsByClassName('save')[0].addEventListener('click', function(e){
 			var allcodes = document.getElementsByClassName('codes');

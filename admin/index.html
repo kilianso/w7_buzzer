@@ -3,6 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- don't cache the page -->
+	<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	
 	<title>Welle 7 Buzzer - Admintool</title>
 	<link rel="stylesheet" href="normalize.css">
 	<link rel="stylesheet" href="style.css">
@@ -17,17 +22,18 @@
 		<hr class="clearfix">
 		<h2>Buzzer - Admintool</h2>
 		<form>
-			<label for="beschreibung">Beschreibung:</label>
-			<input id="beschreibung" type="text" placeholder="Beschreibung des Gewinns eingeben." required>
-			<label for="anzahl">Anzahl:</label>
-			<input id="anzahl" type="tel" maxlength="3" placeholder="Nummer eingeben und Tab drücken." required>
+			<label for="beschreibung">Beschreibung des Gewinns:</label>
+			<input id="beschreibung" type="text" maxlength="120" placeholder="Was kann gewonnen werden?" required>
+			<label for="anzahl">Anzahl Gewinne:</label>
+			<input id="anzahl" type="tel" maxlength="3" placeholder="Wie viele Preise können gewonnen werden?" required>
 			<span>Gewinncodes:</span>
 			<div id="codes-wrapper">
 				<!--Gewinncodes will be append here.-->
 			</div>
 			<div class="buttons">
-				<a class="button" href="#"><button class="save" type="submit">Speichern</button></a>
-				<a class="button" href="javascript:window.print()"><button class="print" type="button">Drucken</button></a>
+				<a class="button active" href="#"><button class="generate" type="submit">Gewinncodes generieren</button></a>
+				<a class="button second" href="#"><button class="save" type="submit">Speichern</button></a>
+				<a class="button second" href="javascript:window.print()"><button class="print" type="button">Drucken</button></a>
 			</div>
 			<span id="confirm"></span>
 		</form>

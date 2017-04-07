@@ -72,8 +72,12 @@ input {
 }
 
 .button, button {
-    display: block;
+    display: none;
     width: 100%;
+}
+.button.active, button{
+	display: block;
+	width: 100%;
 }
 
 button {
@@ -87,6 +91,10 @@ button {
 .button {
     margin: .5rem;
     text-decoration: none;
+}
+
+.generate{
+	background: #234678;
 }
 
 .save {
