@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			//Not happy with that, will use a promise instead soon. You'll have to wait until the localStorage is set before you can do anything.
 			setTimeout(function(){
-				whiteText1.innerHTML = lsData.beschreibung;
+				whiteText1.innerHTML = newData.beschreibung;
 				hoursCounter = localStorage.getItem("hoursCounter");
 				remainingCodes = lsData.codes.length;
 				//set and/or update hoursCounter initially, compared to the last known value in the localStorage
