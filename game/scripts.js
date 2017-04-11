@@ -8,6 +8,8 @@ var hoursCounter;
 var remainingCodes;
 var matchNumber;
 var winningFactor;
+var yourNumber = '';
+var message = '';
 
 //all the DOM Elements
 var pressHere = document.getElementsByClassName('press-here')[0];
@@ -35,11 +37,11 @@ document.addEventListener("DOMContentLoaded", function() {
 			//check if theres already data in the localStorage
 			if (localStorage.getItem("data") !== null) {
 				if(newData.date != lsData.date){
-					console.log(newData);
 					// update the localStorage if the date changed in the json file
 					localStorage.clear();
 					localStorage.setItem('data', xhr.responseText);
 					localStorage.setItem('hoursCounter', 11);
+					lsData = newData;
 					alert('Neue Daten wurden geladen!\nDatum:' + newData.date + '\nVerbleibende Stunden:' + localStorage.getItem('hoursCounter') + '\nVerbleibende Codes:' + newData.codes.length);
 				}else{
 					alert('Keine neuen Daten!\nDatum:' + lsData.date + '\nVerbleibende Stunden:' + localStorage.getItem('hoursCounter') + '\nVerbleibende Codes:' + lsData.codes.length);
@@ -65,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					updateHours(timeThen, timeNow);
 					calculateWinningFactor(hoursCounter, remainingCodes);
 				},3600000);
-				// testing();
+				testing();
 			},200);
 		}else{
 			alert("can't load data", xhr.status);
@@ -78,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		pressHere.className += " wiggle";
 		setTimeout(function(){
 			checkForWin(winningFactor);
-		},2000)
+		},2000);
 	});
 });
 
@@ -99,6 +101,7 @@ function updateHours(then, now){
 function checkForWin(winningFactor){
 	var seconds = 19;
 	var randomNumberBetweenZeroandWinningFactor = Math.round(Math.random() * winningFactor);
+	yourNumber = randomNumberBetweenZeroandWinningFactor;
 	var codes = lsData.codes;
 	var interval;
 	console.log("your number:" , randomNumberBetweenZeroandWinningFactor);
@@ -118,6 +121,7 @@ function checkForWin(winningFactor){
 		calculateWinningFactor(hoursCounter, remainingCodes);
 		//display the winner screen, pick the first code in the lsData.codes Array and show it there.
 		console.log('you win!');
+		message = 'you win!';
 		pressHere.classList.remove("wiggle", "active");
 		yellowText1.classList.remove("active");
 		whiteText1.classList.remove("active");
@@ -141,7 +145,7 @@ function checkForWin(winningFactor){
 	}else{
 		//show looser screen
 		console.log('nope, no price for you.');
-
+		message = 'nope, no price for you.';
 		pressHere.classList.remove("wiggle", "active");
 
 		yellowText1.classList.remove("active");
@@ -161,6 +165,7 @@ function checkForWin(winningFactor){
 			 }
 		}, 1000);
 	}
+	testing();
 	goBackCounter.innerHTML = 20;
 }
 
@@ -193,9 +198,11 @@ function generateMatchNumber(winningFactor){
 
 function testing(){
 	document.getElementById('testing').innerHTML =
-		"date: " + lsData.date + "<br>" +
+		"date in json: " + lsData.date + "<br>" +
 		"hours left: " + hoursCounter + "<br>" +
 		"prices left: " + remainingCodes + "<br>" +
 		"winning-factor: " + winningFactor + "<br>" +
-		"winning-number: " + matchNumber;
+		"next-winning-number: " + matchNumber + "<br>" +
+		"your-number: " + yourNumber + "<br>" +
+		"message: " + message;
 }
