@@ -94,7 +94,7 @@ function updateHours(then, now){
 }
 
 function checkForWin(winningFactor){
-	var seconds = 20;
+	var seconds = 19;
 	var randomNumberBetweenZeroandWinningFactor = Math.round(Math.random() * winningFactor);
 	var codes = lsData.codes;
 	var interval;
@@ -158,6 +158,7 @@ function checkForWin(winningFactor){
 			 }
 		}, 1000);
 	}
+	goBackCounter.innerHTML = 20;
 }
 
 function goingBack(){
