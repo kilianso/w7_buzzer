@@ -35,11 +35,14 @@ document.addEventListener("DOMContentLoaded", function() {
 			//check if theres already data in the localStorage
 			if (localStorage.getItem("data") !== null) {
 				if(newData.date != lsData.date){
-					console.log('update localStorage');
+					console.log(newData);
 					// update the localStorage if the date changed in the json file
 					localStorage.clear();
 					localStorage.setItem('data', xhr.responseText);
 					localStorage.setItem('hoursCounter', 11);
+					alert('Neue Daten wurden geladen!\nDatum:' + newData.date + '\nVerbleibende Stunden:' + localStorage.getItem('hoursCounter') + '\nVerbleibende Codes:' + newData.codes.length);
+				}else{
+					alert('Keine neuen Daten!\nDatum:' + lsData.date + '\nVerbleibende Stunden:' + localStorage.getItem('hoursCounter') + '\nVerbleibende Codes:' + lsData.codes.length);
 				}
 				// if there is already data in the storage and it's the same day, do nothing!
 			}else{
