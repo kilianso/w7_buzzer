@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					updateHours(timeThen, timeNow);
 					calculateWinningFactor(hoursCounter, remainingCodes);
 				},3600000);
-				testing();
+				//testing();
 			},200);
 		}else{
 			alert("can't load data", xhr.status);
@@ -107,6 +107,7 @@ function checkForWin(winningFactor){
 	console.log("your number:" , randomNumberBetweenZeroandWinningFactor);
 	if (randomNumberBetweenZeroandWinningFactor == matchNumber && codes.length > 0) {
 		//delete the last code from the Array.
+		goBackCounter.innerHTML = 20;
 		var lastItem = codes.pop();
 		//display winningCode
 		winnerDigit.children[0].innerHTML = lastItem;
@@ -134,7 +135,7 @@ function checkForWin(winningFactor){
 
 		interval = setInterval(function() {
 		   if (seconds > 0) {
-				 	goBackCounter.innerHTML = seconds;
+				 	goBackCounter.innerHTML = seconds; //20sek
 		      seconds--;
 		   }
 		   else {
@@ -143,6 +144,8 @@ function checkForWin(winningFactor){
 		   }
 		}, 1000);
 	}else{
+		seconds = 14;
+		goBackCounter.innerHTML = 15;
 		//show looser screen
 		console.log('nope, no price for you.');
 		message = 'nope, no price for you.';
@@ -156,7 +159,7 @@ function checkForWin(winningFactor){
 		goBack.classList.add("active");
 		interval = setInterval(function() {
 			 if (seconds > 0) {
-					goBackCounter.innerHTML = seconds;
+					goBackCounter.innerHTML = seconds; //15sek
 					seconds--;
 			 }
 			 else {
@@ -165,8 +168,7 @@ function checkForWin(winningFactor){
 			 }
 		}, 1000);
 	}
-	testing();
-	goBackCounter.innerHTML = 20;
+	// testing();
 }
 
 function goingBack(){
