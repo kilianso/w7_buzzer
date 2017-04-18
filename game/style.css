@@ -79,17 +79,31 @@ header {
 	background: white;
 	padding: 1rem;
 }
+.goback-counter {
+    font-weight: bold;
+    background: #FAF541;
+		-webkit-box-shadow: 0px 2px 33px -6px rgba(0,0,0,0.7);
+		-moz-box-shadow: 0px 2px 33px -6px rgba(0,0,0,0.7);
+		box-shadow: 0px 2px 33px -6px rgba(0,0,0,0.7);
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		width: 4rem;
+		height: 4rem;
+		margin: -2rem 0;
+		border-radius: 50%;
+	}
 
 .yellow-text h1{
-		font-family: "DINPro-CondensedBlack", serif;
-    font-size: 1.6rem;
+		font-family: "DINPro-CondensedBlack", sans-serif;
+    font-size: 2rem;
 		font-weight:400;
     color: #FAF541;
     text-transform: uppercase;
 }
 
 .white-text h2{
-	font-family: "DINPro", serif;
+	font-family: "DINPro", sans-serif;
 	font-size: 2rem;
 	font-weight:400;
 	color: white;
